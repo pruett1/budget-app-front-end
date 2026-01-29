@@ -20,64 +20,71 @@ struct CreateAccountView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("Username")) {
-                    TextField("Username", text: $username)
-                        .autocorrectionDisabled(true)
-                        .autocapitalization(.none)
-                }
+        ScrollView {
+            VStack(spacing: 20) {
+                Text("Create Account")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.bottom, 20)
+                    .foregroundColor(Theme.accent(for: colorScheme))
                 
-                Section(header: Text("Email")) {
-                    TextField("", text: $email)
-                        .keyboardType(.emailAddress)
-                        .autocapitalization(.none)
-//                        .onSubmit {
-//                            let valid  = Validation.isValidEmail(email)
-//                            Alert(title: "Invalid Email")
-//                        }
-                }
+                // Username Field
+                FormFieldView("Username", text: $username)
                 
-                Section(header: Text("Phone Number")) {
-                    TextField("", text: PhoneFormatter.binding($phoneNumber))
-                        .keyboardType(.phonePad)
-                        .autocapitalization(.none)
-                }
+                // Email Field
+                FormFieldView("Email", text: $email, placeholder: "example@example.com")
+                
+                // Phone Field
+                FormFieldView("Phone", text: PhoneFormatter.binding($phoneNumber), placeholder: "(XXX) XXX-XXXX", keyboardType: .phonePad)
 
-                Section(header: Text("Password")) {
-                    SecureInputView("Enter password", text: $password)
-                    SecureField("Confirm password", text: $confirmPassword)
-                }
-
-                if !errorMessage.isEmpty {
-                    Section {
-                        Text(errorMessage)
-                            .foregroundColor(.red)
-                    }
-                }
-
-                Section {
-                    Button {
-                        Task { await createAccount() }
-                    } label: {
-                        if isCreating {
-                            ProgressView()
-                                .frame(maxWidth: .infinity, alignment: .center)
-                        } else {
-                            Text("Create Account")
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .padding()
-                                .background(Theme.accent(for: colorScheme))
-                                .cornerRadius(8)
-                        }
-                    }
-                    .disabled(isCreating || email.isEmpty || password.isEmpty || confirmPassword.isEmpty)
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Password")
+                        .font(.title2)
+                        .fontWeight(.bold)
                     
+                    SecureInputView("Password", text: $password)
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
+                        .padding()
+                        .background(Theme.secondary(for: colorScheme))
+                        .cornerRadius(8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Theme.background(for: colorScheme).opacity(0.5), lineWidth: 1)
+                        )
+                    
+                    SecureField("Confirm Password", text: $confirmPassword)
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
+                        .padding()
+                        .background(Theme.secondary(for: colorScheme))
+                        .cornerRadius(8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Theme.background(for: colorScheme).opacity(0.5), lineWidth: 1)
+                        )
                 }
+
+                
+                Button {
+                    Task { await createAccount() }
+                } label: {
+                    if isCreating {
+                        ProgressView()
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    } else {
+                        Text("Create Account")
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding()
+                            .background(Theme.accent(for: colorScheme))
+                            .cornerRadius(8)
+                    }
+                }
+                .disabled(isCreating || email.isEmpty || password.isEmpty || confirmPassword.isEmpty)
                 
             }
-            .navigationTitle("Create Account")
+            .padding()
         }
     }
 
