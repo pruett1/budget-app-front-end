@@ -37,22 +37,27 @@ struct budget_app_front_endApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if sessionManager.isAuthenticated {
-                NavigationStack {
-                    MainTabView()
-                        .environmentObject(sessionManager)
-                }
-            } else {
-                NavigationStack {
-                    LandingView()
-                        .environmentObject(sessionManager)
+            Group {
+                if sessionManager.isAuthenticated {
+                    NavigationStack {
+                        MainTabView()
+                            .environmentObject(sessionManager)
+                    }
+                    .onAppear {
+                        sessionManager.restore()
+                    }
+                } else {
+                    NavigationStack {
+                        LandingView()
+                            .environmentObject(sessionManager)
+                    }
+                    .onAppear {
+                        sessionManager.restore()
+                    }
                 }
             }
+            .preferredColorScheme(preferredColorScheme)
         }
-        .onAppear {
-            sessionManager.restore()
-        }
-        .environment(\.colorScheme, preferredColorScheme)
         .modelContainer(sharedModelContainer)
     }
 }
