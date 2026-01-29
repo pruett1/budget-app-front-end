@@ -9,12 +9,10 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var email = ""
+    @State private var username = ""
     @State private var password = ""
     @State private var isLoggingIn = false
     @State private var loginFailed = false
-    @State private var navigateToMain = false
-    @State private var navigateToForgotPassword = false
 
     @EnvironmentObject var sessionManager: SessionManager
     @Environment(\.colorScheme) private var colorScheme
@@ -22,26 +20,28 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
+                Spacer()
+                
                 Text("Log In")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .background(Theme.background(for: colorScheme))
+                    .padding(.bottom, 30)
                 
-                TextField("Email", text: $email)
-                    .keyboardType(.emailAddress)
+                TextField("Username", text: $username)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .padding()
-                    .background(Theme.accent(for: colorScheme))
+                    .background(Theme.secondary(for: colorScheme))
                     .cornerRadius(8)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Theme.background(for: colorScheme).opacity(0.5), lineWidth: 1)
                     )
                 
-                SecureField("Password", text: $password)
+                SecureInputView("Password", text: $password)
                     .padding()
-                    .background(Theme.accent(for: colorScheme))
+                    .background(Theme.secondary(for: colorScheme))
                     .cornerRadius(8)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
@@ -49,7 +49,7 @@ struct LoginView: View {
                     )
                 
                 if loginFailed {
-                    Text("Login failed. Please check your credentials.")
+                    Text("Invalid Username or Password")
                         .foregroundColor(.red)
                         .font(.footnote)
                 }
@@ -60,14 +60,13 @@ struct LoginView: View {
                     
                     // TODO: Replace with actual API call
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        if !email.isEmpty && !password.isEmpty {
+                        if !username.isEmpty && !password.isEmpty {
                             Task {
                                 await sessionManager.login(
-                                    username: email,
+                                    username: username,
                                     password: password
                                 )
                             }
-                            navigateToMain = true
                         } else {
                             loginFailed = true
                         }
@@ -83,26 +82,44 @@ struct LoginView: View {
                             )
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Theme.background(for: colorScheme).opacity(0.2))
+                            .background(Theme.accent(for: colorScheme))
                             .cornerRadius(8)
                     } else {
                         Text("Log In")
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Theme.background(for: colorScheme))
+                            .background(Theme.accent(for: colorScheme))
                             .cornerRadius(8)
                     }
                 }
-                .disabled(isLoggingIn || email.isEmpty || password.isEmpty)
+                .disabled(isLoggingIn || username.isEmpty || password.isEmpty)
                 
-                Button {
-                    navigateToForgotPassword = true
-                } label: {
-                    Text("Forgot Password?")
-                        .foregroundColor(Theme.secondary(for: colorScheme))
+                HStack {
+                    Spacer()
+                    NavigationLink {
+                        ForgotPasswordView()
+                    }
+                    label: {
+                        Text("Forgot Password?")
+                            .foregroundColor(Theme.accent(for: colorScheme))
+                    }
+                    .padding(.top, 10)
+                    .padding(.trailing, 10)
+                     
+                    
+                    NavigationLink {
+                        CreateAccountView()
+                    }
+                    label: {
+                       Text("Register")
+                            .foregroundColor(Theme.accent(for: colorScheme))
+                    }
+                    .padding(.top, 10)
+                    .padding(.leading, 10)
+                    
+                    Spacer()
                 }
-                .padding(.top, 10)
                 
                 Spacer()
             }
@@ -111,13 +128,6 @@ struct LoginView: View {
                 Theme.background(for: colorScheme)
                     .ignoresSafeArea()
             )
-            .navigationDestination(isPresented: $navigateToMain) {
-                MainTabView()
-                    .environmentObject(sessionManager)
-            }
-            .navigationDestination(isPresented: $navigateToForgotPassword) {
-                ForgotPasswordView()
-            }
         }
     }
 }

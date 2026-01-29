@@ -11,6 +11,7 @@ import SwiftUI
 struct ForgotPasswordView: View {
     @State private var email: String = ""
     @State private var showConfirmationAlert = false
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
 
     var body: some View {
         VStack(spacing: 20) {
@@ -22,7 +23,7 @@ struct ForgotPasswordView: View {
                 .keyboardType(.emailAddress)
                 .autocapitalization(.none)
                 .padding()
-                .background(Color(UIColor.secondarySystemBackground))
+                .background(Theme.secondary(for: colorScheme))
                 .cornerRadius(8)
 
             Button("Send Reset Link") {
@@ -32,7 +33,7 @@ struct ForgotPasswordView: View {
             .disabled(email.isEmpty)
             .padding()
             .frame(maxWidth: .infinity)
-            .background(email.isEmpty ? Color.gray : Color.blue)
+            .background(email.isEmpty ? Color.gray : Theme.accent(for: colorScheme))
             .foregroundColor(.white)
             .cornerRadius(8)
 

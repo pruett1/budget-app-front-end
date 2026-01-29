@@ -8,25 +8,44 @@
 import SwiftUI
 
 struct CreateAccountView: View {
+    @State private var username = ""
     @State private var email = ""
+    @State private var phoneNumber = ""
     @State private var password = ""
     @State private var confirmPassword = ""
     @State private var errorMessage = ""
     @State private var isCreating = false
     @EnvironmentObject var sessionManager: SessionManager
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationView {
             Form {
+                Section(header: Text("Username")) {
+                    TextField("Username", text: $username)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                }
+                
                 Section(header: Text("Email")) {
-                    TextField("Enter your email", text: $email)
+                    TextField("", text: $email)
                         .keyboardType(.emailAddress)
+                        .autocapitalization(.none)
+//                        .onSubmit {
+//                            let valid  = Validation.isValidEmail(email)
+//                            Alert(title: "Invalid Email")
+//                        }
+                }
+                
+                Section(header: Text("Phone Number")) {
+                    TextField("", text: PhoneFormatter.binding($phoneNumber))
+                        .keyboardType(.phonePad)
                         .autocapitalization(.none)
                 }
 
                 Section(header: Text("Password")) {
-                    SecureField("Enter password", text: $password)
+                    SecureInputView("Enter password", text: $password)
                     SecureField("Confirm password", text: $confirmPassword)
                 }
 
@@ -46,11 +65,17 @@ struct CreateAccountView: View {
                                 .frame(maxWidth: .infinity, alignment: .center)
                         } else {
                             Text("Create Account")
+                                .foregroundColor(.white)
                                 .frame(maxWidth: .infinity, alignment: .center)
+                                .padding()
+                                .background(Theme.accent(for: colorScheme))
+                                .cornerRadius(8)
                         }
                     }
                     .disabled(isCreating || email.isEmpty || password.isEmpty || confirmPassword.isEmpty)
+                    
                 }
+                
             }
             .navigationTitle("Create Account")
         }
