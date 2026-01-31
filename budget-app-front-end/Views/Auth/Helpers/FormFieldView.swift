@@ -25,8 +25,8 @@ struct FormFieldView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Email")
-                .font(.title2)
+            Text(title)
+                .font(.title3)
                 .fontWeight(.bold)
             
             TextField("", text: $text, prompt: Text(verbatim: placeholder))
