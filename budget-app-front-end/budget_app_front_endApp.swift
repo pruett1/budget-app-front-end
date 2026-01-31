@@ -24,12 +24,12 @@ struct budget_app_front_endApp: App {
         }
     }()
     
-    @AppStorage("appearance") private var appearance: String = "system"
+    @AppStorage("appearance") private var appearance: String = "System"
     
     private var preferredColorScheme: ColorScheme? {
         switch appearance {
-        case "light": return .light
-        case "dark": return .dark
+        case "Light": return .light
+        case "Dark": return .dark
         default: return nil
         }
     }

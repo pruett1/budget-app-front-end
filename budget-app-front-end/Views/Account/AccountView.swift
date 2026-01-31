@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AccountView: View {
     @EnvironmentObject var sessionManager: SessionManager
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
     @State private var name: String = ""
     @State private var email: String = ""
@@ -17,24 +18,36 @@ struct AccountView: View {
     private let appearanceOptions = ["System", "Light", "Dark"]
     
     var body: some View {
-        NavigationView {
-            Form {
-                Section {
-                    Button("Connect Accounts (Plaid)") {
-                        // TODO: Connect accounts via Plaid
-                    }
+        ScrollView {
+            VStack(alignment: .center, spacing: 10) {
+                Button {
+                    // TODO: Connect accounts via Plaid
+                } label: {
+                    Text("Connect Account to Plaid")
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding()
+                        .background(Theme.accent(for: colorScheme))
+                        .cornerRadius(8)
                 }
                 
-                Section(header: Text("Personal Information")) {
-                    TextField("Name", text: $name)
-                    TextField("Email", text: $email)
-                    Button("Save") {
-                        // TODO: Save updated personal information
-                    }
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Personal Info:")
+                        .foregroundColor(Theme.accent(for: colorScheme))
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .padding()
                 }
                 
-                Section(header: Text("Appearance")) {
-                    Picker("Appearance", selection: $appearance) {
+                VStack(spacing: 10) {
+                    Text("Theme")
+                        .foregroundColor(Theme.accent(for: colorScheme))
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .padding()
+                    
+                    Picker("", selection: $appearance) {
                         ForEach(appearanceOptions, id: \.self) { option in
                             Text(option).tag(option)
                         }
@@ -42,14 +55,21 @@ struct AccountView: View {
                     .pickerStyle(SegmentedPickerStyle())
                 }
                 
-                Section {
-                    Button("Log Out") {
-                        sessionManager.logout()
-                    }
-                    .foregroundColor(.red)
+                Spacer()
+                
+                Button {
+                    sessionManager.logout()
+                } label: {
+                    Text("Logout")
+                        .foregroundColor(Theme.tertiary(for: colorScheme))
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding()
+                        .background(Theme.secondary(for: colorScheme))
+                        .cornerRadius(8)
                 }
             }
-            .navigationTitle("Account")
+            .padding()
+            .background(Theme.background(for: colorScheme))
         }
     }
 }
