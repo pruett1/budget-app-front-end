@@ -24,7 +24,7 @@ struct CreateAccountView: View {
     var body: some View {
         VStack(spacing: 10) {
             ZStack(alignment: .top) {
-                Theme.accent(for: colorScheme)
+                Theme.primary(for: colorScheme)
                     .ignoresSafeArea()
                 
                 VStack {
@@ -120,7 +120,7 @@ struct CreateAccountView: View {
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .padding()
-                                .background(Theme.accent(for: colorScheme))
+                                .background(Theme.primary(for: colorScheme))
                                 .cornerRadius(8)
                         }
                     }

@@ -77,19 +77,19 @@ struct LoginView: View {
                         ProgressView()
                             .progressViewStyle(
                                 CircularProgressViewStyle(
-                                    tint: Theme.accent(for: colorScheme)
+                                    tint: Theme.primary(for: colorScheme)
                                 )
                             )
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Theme.accent(for: colorScheme))
+                            .background(Theme.primary(for: colorScheme))
                             .cornerRadius(8)
                     } else {
                         Text("Log In")
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Theme.accent(for: colorScheme))
+                            .background(Theme.primary(for: colorScheme))
                             .cornerRadius(8)
                     }
                 }
@@ -102,7 +102,7 @@ struct LoginView: View {
                     }
                     label: {
                         Text("Forgot Password?")
-                            .foregroundColor(Theme.accent(for: colorScheme))
+                            .foregroundColor(Theme.primary(for: colorScheme))
                     }
                     .padding(.top, 10)
                     .padding(.trailing, 10)
@@ -113,7 +113,7 @@ struct LoginView: View {
                     }
                     label: {
                        Text("Register")
-                            .foregroundColor(Theme.accent(for: colorScheme))
+                            .foregroundColor(Theme.primary(for: colorScheme))
                     }
                     .padding(.top, 10)
                     .padding(.leading, 10)

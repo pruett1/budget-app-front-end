@@ -14,13 +14,13 @@ struct SplashView: View {
             Image(systemName: "dollarsign.circle.fill")
                 .resizable()
                 .frame(width: 80, height: 80)
-                .foregroundColor(Theme.accent(for: colorScheme))
+                .foregroundColor(Theme.primary(for: colorScheme))
                 .padding(.bottom, 50)
             
             
             
             ProgressView("Loading...")
-                .progressViewStyle(CircularProgressViewStyle(tint: Theme.accent(for: colorScheme)))
+                .progressViewStyle(CircularProgressViewStyle(tint: Theme.primary(for: colorScheme)))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Theme.background(for: colorScheme))

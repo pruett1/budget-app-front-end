@@ -33,7 +33,7 @@ struct ForgotPasswordView: View {
             .disabled(email.isEmpty)
             .padding()
             .frame(maxWidth: .infinity)
-            .background(email.isEmpty ? Color.gray : Theme.accent(for: colorScheme))
+            .background(email.isEmpty ? Color.gray : Theme.primary(for: colorScheme))
             .foregroundColor(.white)
             .cornerRadius(8)
 
