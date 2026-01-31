@@ -9,7 +9,8 @@ import SwiftUI
 
 struct AccountView: View {
     @EnvironmentObject var sessionManager: SessionManager
-    @Environment(\.colorScheme) private var colorScheme: ColorScheme
+//    @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    private var colorScheme: ColorScheme = .dark
     
     @State private var name: String = ""
     @State private var email: String = ""
@@ -19,40 +20,65 @@ struct AccountView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .center, spacing: 10) {
-                Button {
-                    // TODO: Connect accounts via Plaid
-                } label: {
-                    Text("Connect Account to Plaid")
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding()
-                        .background(Theme.accent(for: colorScheme))
-                        .cornerRadius(8)
+            VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Personal Info")
+                        .foregroundColor(Theme.primary(for: colorScheme))
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    
+                    HStack {
+                        Text("Name: ")
+                            .foregroundColor(Theme.secondary(for: colorScheme))
+                        
+                        Spacer()
+                       
+                        // TODO: have this load in from saved val
+                        Text("Bob")
+                        
+                        Text("Smith")
+
+                    }
+                    
+                    HStack {
+                        Text("Email: ")
+                            .foregroundColor(Theme.secondary(for: colorScheme))
+
+                        Spacer()
+                        
+                        Text(verbatim: "bobsmith@gmail.com")
+                    }
                 }
-                
+                .padding()
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Personal Info:")
-                        .foregroundColor(Theme.accent(for: colorScheme))
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .padding()
-                }
-                
-                VStack(spacing: 10) {
                     Text("Theme")
-                        .foregroundColor(Theme.accent(for: colorScheme))
-                        .font(.title)
+                        .foregroundColor(Theme.primary(for: colorScheme))
+                        .font(.title2)
                         .fontWeight(.bold)
-                        .padding()
                     
-                    Picker("", selection: $appearance) {
+                    Picker("Theme", selection: $appearance) {
                         ForEach(appearanceOptions, id: \.self) { option in
                             Text(option).tag(option)
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
+                }
+                .padding()
+                
+                Button {
+                    // TODO: Connect accounts via Plaid
+                } label: {
+                    Text("Connect Account to Plaid")
+                        .foregroundColor(Theme.primary(for: colorScheme))
+                        .background(Theme.background(for: colorScheme))
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding()
+                        .cornerRadius(16)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Theme.primary(for: colorScheme), lineWidth: 1)
+                        }
                 }
                 
                 Spacer()
@@ -61,11 +87,16 @@ struct AccountView: View {
                     sessionManager.logout()
                 } label: {
                     Text("Logout")
-                        .foregroundColor(Theme.tertiary(for: colorScheme))
+                        .foregroundColor(Theme.error(for: colorScheme))
+                        .background(Theme.background(for: colorScheme))
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding()
-                        .background(Theme.secondary(for: colorScheme))
-                        .cornerRadius(8)
+                        .cornerRadius(16)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Theme.error(for: colorScheme), lineWidth: 1)
+                        }
+                        
                 }
             }
             .padding()
