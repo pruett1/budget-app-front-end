@@ -25,6 +25,7 @@ struct LoginView: View {
                 Text("Log In")
                     .font(.largeTitle)
                     .fontWeight(.bold)
+                    .foregroundStyle(Theme.primary(for: colorScheme))
                     .background(Theme.background(for: colorScheme))
                     .padding(.bottom, 30)
                 
@@ -32,7 +33,7 @@ struct LoginView: View {
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .padding()
-                    .background(Theme.secondary(for: colorScheme))
+                    .background(Theme.formBackground(for: colorScheme))
                     .cornerRadius(8)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
@@ -41,7 +42,7 @@ struct LoginView: View {
                 
                 SecureInputView("Password", text: $password)
                     .padding()
-                    .background(Theme.secondary(for: colorScheme))
+                    .background(Theme.formBackground(for: colorScheme))
                     .cornerRadius(8)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
@@ -102,7 +103,7 @@ struct LoginView: View {
                     }
                     label: {
                         Text("Forgot Password?")
-                            .foregroundColor(Theme.primary(for: colorScheme))
+                            .foregroundColor(Theme.secondary(for: colorScheme))
                     }
                     .padding(.top, 10)
                     .padding(.trailing, 10)
@@ -113,7 +114,7 @@ struct LoginView: View {
                     }
                     label: {
                        Text("Register")
-                            .foregroundColor(Theme.primary(for: colorScheme))
+                            .foregroundColor(Theme.secondary(for: colorScheme))
                     }
                     .padding(.top, 10)
                     .padding(.leading, 10)

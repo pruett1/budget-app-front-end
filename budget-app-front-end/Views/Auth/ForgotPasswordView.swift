@@ -22,8 +22,9 @@ struct ForgotPasswordView: View {
             TextField("Email", text: $email)
                 .keyboardType(.emailAddress)
                 .autocapitalization(.none)
+                .autocorrectionDisabled()
                 .padding()
-                .background(Theme.secondary(for: colorScheme))
+                .background(Theme.formBackground(for: colorScheme))
                 .cornerRadius(8)
 
             Button("Send Reset Link") {

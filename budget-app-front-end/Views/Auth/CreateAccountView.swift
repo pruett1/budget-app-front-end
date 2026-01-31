@@ -55,7 +55,7 @@ struct CreateAccountView: View {
                             .autocapitalization(.words)
                             .disableAutocorrection(true)
                             .padding()
-                            .background(Theme.secondary(for: colorScheme))
+                            .background(Theme.formBackground(for: colorScheme))
                             .cornerRadius(8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
@@ -66,7 +66,7 @@ struct CreateAccountView: View {
                             .autocapitalization(.words)
                             .disableAutocorrection(true)
                             .padding()
-                            .background(Theme.secondary(for: colorScheme))
+                            .background(Theme.formBackground(for: colorScheme))
                             .cornerRadius(8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
@@ -89,7 +89,7 @@ struct CreateAccountView: View {
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
                             .padding()
-                            .background(Theme.secondary(for: colorScheme))
+                            .background(Theme.formBackground(for: colorScheme))
                             .cornerRadius(8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
@@ -100,7 +100,7 @@ struct CreateAccountView: View {
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
                             .padding()
-                            .background(Theme.secondary(for: colorScheme))
+                            .background(Theme.formBackground(for: colorScheme))
                             .cornerRadius(8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
